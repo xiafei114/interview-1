@@ -315,7 +315,10 @@ netstat
 
 
 
-
+** 全连接队列/半连接队列 ** 
+半连接队列: client 向 server发出sync请求成功后,该链接被放入到半连接队列, 同时向client回复ACK+SYN
+全连接队列: 
+tcp_abort_on_overflow 0: 全连接队列满了之后, server会扔掉client发来的ack. 1: 全连接满了之后,server发送一个reset包给client, 表示废掉这个过程和这个连接
 
 
 
