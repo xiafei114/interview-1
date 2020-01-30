@@ -1,7 +1,8 @@
 package main
 
 import (
-	"workPool/algorithm/leetcode"
+	"fmt"
+	"workPool/algorithm/tree"
 )
 
 func main() {
@@ -29,5 +30,12 @@ func main() {
 	//	time.Sleep(time.Second)
 	//}
 
-	leetcode.CalcDays()
+	data := []interface{}{"A", "B", "C", "D", "E", "F", "G"}
+	root := tree.NewTree(data, 0, len(data))
+
+	tree.PreOrder(root)
+	fmt.Println()
+	tree.InOrder(root)
+	fmt.Println()
+	tree.PostOrder(root)
 }

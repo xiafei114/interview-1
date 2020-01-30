@@ -1,6 +1,8 @@
 package leetcode
 
 import (
+	"bytes"
+	"encoding/json"
 	"log"
 	"strings"
 	"unicode"
@@ -86,6 +88,20 @@ func IsPalindromeV2(s string) bool {
  *     Next *ListNode
  * }
  */
+type DeepCopy interface {
+	Copy(dst interface{}) error
+}
+
+// 深拷贝
+func (l *ListNode) Copy(dst interface{}) error {
+	var buf bytes.Buffer
+	err := json.NewEncoder(&buf).Encode(*l)
+	if err != nil {
+		return err
+	}
+	return json.NewDecoder(bytes.NewBuffer(buf.Bytes())).Decode(dst)
+}
+
 
 type ListNode struct {
 	Val int
