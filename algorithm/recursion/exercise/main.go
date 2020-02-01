@@ -17,8 +17,6 @@ type Node struct {
 	Value int
 }
 
-
-
 func ReverseRecursion(head *Node) *Node{
 	// 1. 寻找终止条件 head.Next == nil
 	if head == nil || head.Next == nil{
@@ -49,3 +47,53 @@ func main() {
 
 	ReverseRecursion(node)
 }
+
+// 1. len(X) = [len(O), len(O)+1]
+// 2. len(X) + len(O) <= 9
+// 3. X获胜 len(X) = len(O) + 1, O获胜len(X) = len(O)
+
+
+func validTicTacToe(board []string) bool {
+	var xCount,oCount,blankCount int
+	for _, line := range board {
+		for _, ch := range line {
+			switch string(ch) {
+			case "O":
+				oCount ++
+			case "X":
+				xCount ++
+			case " ":
+				blankCount ++
+			default:
+				return false
+			}
+		}
+	}
+
+	if xCount + oCount + blankCount > 9 {
+		return false
+	}
+
+	if xCount != oCount && xCount != oCount + 1 {
+		return false
+	}
+
+	win := func(ch uint8) bool {
+		for i:=0;i<3;i++ {
+			if board[0][i] == ch && board[1][i] == ch && board[2][i] == ch {return true}
+			if board[i][0] == ch && board[i][1] == ch && board[i][2] == ch {return true}
+		}
+
+		if ch == board[0][0] && ch == board[1][1] && ch == board[2][2] {return true}
+		if ch == board[0][2] && ch == board[1][1] && ch == board[2][0] {return true}
+		return false
+	}
+
+	x := "X"
+	o := "O"
+	if win(uint8(x[0])) && xCount != oCount + 1 {return false}
+	if win(uint8(o[0])) && oCount != xCount {return false}
+
+	return true
+}
+
