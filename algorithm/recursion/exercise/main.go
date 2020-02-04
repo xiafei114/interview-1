@@ -1,5 +1,7 @@
 package main
 
+import "math"
+
 // 自上向下理解
 // 剩1个台阶 f(n-1) , 剩2个 f(n-2)
 
@@ -11,6 +13,19 @@ func jump(n int) int {
 	return jump(n - 1) + jump(n - 2)
 }
 
+// 动态规划解法
+func Jump2(n int) int {
+	if n <= 2 {
+		return n
+	}
+
+	data := []int{0, 1, 2}
+	for i:=3;i<=n;i++ {
+		data = append(data, data[i-1] + data[i-2])
+	}
+
+	return data[n]
+}
 
 type Node struct {
 	Next *Node
@@ -51,8 +66,6 @@ func main() {
 // 1. len(X) = [len(O), len(O)+1]
 // 2. len(X) + len(O) <= 9
 // 3. X获胜 len(X) = len(O) + 1, O获胜len(X) = len(O)
-
-
 func validTicTacToe(board []string) bool {
 	var xCount,oCount,blankCount int
 	for _, line := range board {
@@ -97,3 +110,52 @@ func validTicTacToe(board []string) bool {
 	return true
 }
 
+type TreeNode struct {
+	val int
+	Left *TreeNode
+	Right *TreeNode
+}
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+
+var ans float64
+// 同值最短路径
+// @links https://leetcode-cn.com/problems/longest-univalue-path/submissions/
+func longestUnivaluePath(root *TreeNode) int {
+	arrowLength(root)
+	return int(ans)
+}
+
+func arrowLength(root *TreeNode) float64 {
+	if root == nil {
+		return 0
+	}
+	left := arrowLength(root.Left)
+	right := arrowLength(root.Right)
+
+	var arrowLeft, arrowRight float64
+	if root.Left.val == root.val {
+		arrowLeft = left + 1
+	}
+
+	if root.Right.val == root.val {
+		arrowRight = right + 1
+	}
+
+	ans = math.Max(ans, arrowLeft + arrowRight)
+	return math.Max(arrowLeft, arrowRight)
+}
+
+// 第K个语法符号
+// 每层的长度 2^(n-1) = len
+// 用N与层数做比较, n<len, 递归到该层返回
+// n > len, 得到上一层的N-1进行计算
+func kthGrammar(N int, K int) int {
+	return 0
+}

@@ -63,9 +63,38 @@ func Test_ValidTicTacToe(t *testing.T) {
 			t.Error("failed", board)
 		}
 	}
+}
 
 
+type JumpStruct struct {
+	data int
+	result int
+}
 
+func Test_Jump(t *testing.T) {
+	items := []*JumpStruct{
+		&JumpStruct{
+			data: 1,
+			result: 1,
+		},
+		&JumpStruct{
+			data:   2,
+			result: 2,
+		},
+		&JumpStruct{
+			data:   3,
+			result: 3,
+		},
+		&JumpStruct{
+			data:   4,
+			result: 5,
+		},
+	}
 
-
+	for _, item := range items {
+		res := Jump2(item.data)
+		if res != item.result {
+			t.Error("assert failed", res)
+		}
+	}
 }
