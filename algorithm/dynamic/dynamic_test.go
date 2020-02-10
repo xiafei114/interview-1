@@ -113,3 +113,29 @@ func Test_rob(t *testing.T) {
 		assert.Equal(t, item.output, rob(item.input), "assert failed")
 	}
 }
+
+type TestMinCost struct {
+	input []int
+	output int
+}
+
+func Test_MinCost(t *testing.T) {
+	items := []*TestMinCost {
+		{
+			input: []int{10, 15, 20},
+			output: 15,
+		},
+		{
+			input: []int{1, 100, 1, 1, 1, 100, 1, 1, 100, 1},
+			output: 6,
+		},
+		{
+			input: []int{0, 0, 0, 0},
+			output: 0,
+		},
+	}
+
+	for _, item := range items {
+		assert.Equal(t, item.output, minCostClimbingStairs(item.input), "assert failed")
+	}
+}

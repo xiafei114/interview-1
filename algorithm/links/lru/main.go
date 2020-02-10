@@ -6,8 +6,9 @@ package main
 
 import (
 	"fmt"
-	"sync/atomic"
 	"sync"
+	"sync/atomic"
+	"workPool/algorithm/links/lru/list"
 )
 
 type LRU struct {
@@ -123,47 +124,63 @@ func(l *LRU) moveToFront(item string) {
 } 
 
 func main() {
-	data := []Node{
-		{
-			Key: "1",
-			Value: 1,
-		},
-		{
-			Key: "2",
-			Value: 2,
-		},
-		{
-			Key: "3",
-			Value: 3,
-		},
-		{
-			Key: "4",
-			Value: 4,
-		},
-		{
-			Key: "5",
-			Value: 5,
-		},
-		{
-			Key: "3",
-			Value: 3,
-		},
-		{
-			Key: "3",
-			Value: 4,
-		},
+	//data := []Node{
+	//	{
+	//		Key: "1",
+	//		Value: 1,
+	//	},
+	//	{
+	//		Key: "2",
+	//		Value: 2,
+	//	},
+	//	{
+	//		Key: "3",
+	//		Value: 3,
+	//	},
+	//	{
+	//		Key: "4",
+	//		Value: 4,
+	//	},
+	//	{
+	//		Key: "5",
+	//		Value: 5,
+	//	},
+	//	{
+	//		Key: "3",
+	//		Value: 3,
+	//	},
+	//	{
+	//		Key: "3",
+	//		Value: 4,
+	//	},
+	//}
+	//lru := NewLRU(4)
+	//for _, item := range data{
+	//	lru.Set(item.Key, item.Value)
+	//	lru.print()
+	//}
+	//
+	//c := []string{"3", "1", "5"}
+	//
+	//for _, k := range c {
+	//	r := lru.get(k)
+	//	fmt.Println("get cache", r)
+	//}
+	lru1 := list.NewLRU(3)
+	_, err := lru1.Get("hello")
+	if err != nil {
+		fmt.Println(err)
 	}
-	lru := NewLRU(4)
-	for _, item := range data{
-		lru.Set(item.Key, item.Value)
-		lru.print()
+	_, _ = lru1.Set("hello", 1)
+	_, _ = lru1.Set("world", 2)
+
+	head := lru1.Head
+	for {
+		if head == nil{
+			break
+		}
+
+		fmt.Printf("key: %s, data: %d \n", head.Key, head.Data)
+		head = head.Next
 	}
-
-	c := []string{"3", "1", "5"}
-
-	for _, k := range c {
-		r := lru.get(k)
-		fmt.Println("get cache", r)
-	}
-
 }
