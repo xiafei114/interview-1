@@ -11,6 +11,7 @@ type TreeNode struct {
 	Val interface{}
 	Left *TreeNode
 	Right *TreeNode
+	Length int
 }
 
 type TreeString []string
@@ -36,6 +37,7 @@ func NewTree(data []interface{}, index, length int) *TreeNode {
 	root := &TreeNode{Val: data[index]}
 	root.Left = NewTree(data, 2 * index, length)
 	root.Right = NewTree(data, 2 * index + 1, length)
+	root.Length = len(data)
 	return root
 }
 

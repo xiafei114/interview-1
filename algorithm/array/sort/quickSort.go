@@ -1,3 +1,5 @@
+package sort
+
 func quickSort(data []int, s, e int) {
 	i, j := s, e
 	x := data[i] // pivot
